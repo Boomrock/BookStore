@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { MenuItem, Select, FormControl, InputLabel, Box, Typography, Paper } from '@mui/material';
 
 const genres = [
   'Fiction',
@@ -16,30 +15,32 @@ const genres = [
 const ganresStyle = {
     backgroundColor: '#F4C9A7',
     borderRadius: '45px',
-    padding: '8px 16px',
-    display: 'inline-block'
+    padding: '0px 16px',
+    display: 'inline-block',
+    height: '50px',
+    margin: '0px 10px'
 };
 
 export default function Genres() {
-  const [elements, setElements] = useState([<Ganre key={0} handleGenreChangeHandler={handleGenreChangeHandler} />]);
+  const [elements, setElements] = useState([<Genre key={0} handleGenreChangeHandler={handleGenreChangeHandler} />]);
 
   function handleGenreChangeHandler() {
     setElements(prevElements => {
-      const newElement = <Ganre key={prevElements.length} handleGenreChangeHandler={handleGenreChangeHandler} />;
+      const newElement = <Genre key={prevElements.length} handleGenreChangeHandler={handleGenreChangeHandler} />;
       return [...prevElements, newElement];
     });
   }
 
   return (
-    <Box sx={{ padding: '16px' }}>
+    <div style={{ padding: '16px', display:"flex" }}>
       {elements.map((element, index) => (
         <React.Fragment key={index}>{element}</React.Fragment>
       ))}
-    </Box>
+    </div>
   );
 }
 
-function Ganre({ handleGenreChangeHandler }) {
+function Genre({ handleGenreChangeHandler }) {
   const [genre, setGenre] = useState('');
 
   const handleGenreChange = (event) => {
@@ -50,31 +51,24 @@ function Ganre({ handleGenreChangeHandler }) {
   return (
     <div>
       {genre === '' ? (
-        <FormControl
-          variant="outlined"
-          margin="dense"
-        >
-            <InputLabel>Жанр</InputLabel>
-            <Select
-                value={genre}
-                variant = 'standard'
-                onChange={handleGenreChange}
-                label="Жанр"
-                style={{...ganresStyle,
-                    height:'50px'
-                }}
-            >
-                {genres.map((genre) => (
-                <MenuItem key={genre} value={genre}>
-                    {genre}
-                </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <div>
+          <select
+            value={genre}
+            onChange={handleGenreChange}
+            style={{ ...ganresStyle, border: 'none' }}
+          >
+            <option value="">Выберите жанр</option>
+            {genres.map((genre) => (
+              <option key={genre} value={genre}>
+                {genre}
+              </option>
+            ))}
+          </select>
+        </div>
       ) : (
-        <Paper sx={{ ...ganresStyle }}>
-          <Typography variant="body1">{genre}</Typography>
-        </Paper>
+        <div style={ganresStyle}>
+          <p>{genre}</p>
+        </div>
       )}
     </div>
   );
