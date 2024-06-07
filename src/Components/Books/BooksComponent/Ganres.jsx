@@ -1,38 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+
+import styles from "../../../Assets/Styles/Style.module.scss";
 
 const genres = [
-  'Fiction',
-  'Non-Fiction',
-  'Science Fiction',
-  'Fantasy',
-  'Mystery',
-  'Thriller',
-  'Biography',
-  'History',
-  'Children',
+  "Fiction",
+  "Non-Fiction",
+  "Science Fiction",
+  "Fantasy",
+  "Mystery",
+  "Thriller",
+  "Biography",
+  "History",
+  "Children",
 ];
 
 const ganresStyle = {
-    backgroundColor: '#F4C9A7',
-    borderRadius: '45px',
-    padding: '0px 16px',
-    display: 'inline-block',
-    height: '50px',
-    margin: '0px 10px'
+  backgroundColor: "#F4C9A7",
+  borderRadius: "45px",
+  padding: "0px 16px",
+  display: "inline-block",
+  height: "50px",
 };
 
 export default function Genres() {
-  const [elements, setElements] = useState([<Genre key={0} handleGenreChangeHandler={handleGenreChangeHandler} />]);
+  const [elements, setElements] = useState([
+    <Genre key={0} handleGenreChangeHandler={handleGenreChangeHandler} />,
+  ]);
 
   function handleGenreChangeHandler() {
-    setElements(prevElements => {
-      const newElement = <Genre key={prevElements.length} handleGenreChangeHandler={handleGenreChangeHandler} />;
+    setElements((prevElements) => {
+      const newElement = (
+        <Genre
+          key={prevElements.length}
+          handleGenreChangeHandler={handleGenreChangeHandler}
+        />
+      );
+
       return [...prevElements, newElement];
     });
   }
 
   return (
-    <div style={{ padding: '16px', display:"flex" }}>
+    <div className={styles.genres}>
       {elements.map((element, index) => (
         <React.Fragment key={index}>{element}</React.Fragment>
       ))}
@@ -41,7 +50,7 @@ export default function Genres() {
 }
 
 function Genre({ handleGenreChangeHandler }) {
-  const [genre, setGenre] = useState('');
+  const [genre, setGenre] = useState("");
 
   const handleGenreChange = (event) => {
     setGenre(event.target.value);
@@ -50,12 +59,12 @@ function Genre({ handleGenreChangeHandler }) {
 
   return (
     <div>
-      {genre === '' ? (
+      {genre === "" ? (
         <div>
           <select
             value={genre}
             onChange={handleGenreChange}
-            style={{ ...ganresStyle, border: 'none' }}
+            style={{ ...ganresStyle, border: "none" }}
           >
             <option value="">Выберите жанр</option>
             {genres.map((genre) => (

@@ -365,3 +365,12 @@ table {
   justify-content: center;
   align-items: center;
 }
+
+.genres {
+  display: flex;
+
+  flex-wrap: wrap;
+  gap: 25px;
+
+  padding: 16px 0px;
+}
