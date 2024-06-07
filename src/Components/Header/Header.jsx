@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../Redux/Slices/auth";
 
 import styles from "../../Assets/Styles/Style.module.scss";
+import AddBookModal from "../Books/AddBookModalWindow";
+
 
 export default function Header({ currentUser, openMenu, changeSignin }) {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ export default function Header({ currentUser, openMenu, changeSignin }) {
 
         {!currentUser ? (
           <section className={styles.navigation_buttons}>
+            <AddBookModal/>
             <button
               onClick={() => {
                 navigate("/login");
