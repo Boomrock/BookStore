@@ -1,63 +1,103 @@
 // App.js
 import React, { useState } from 'react';
-import { Modal, Box, Typography, TextField, Button } from '@mui/material';
+import { Modal, Box } from '@mui/material';
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  boxShadow: 24,
-  backgroundColor: '#F4C9A7',
-  borderRadius: '45px',
-  padding: '20px',
-  margin: '10px',
-  p: 4,
-};
+import { fetchUserData } from "../../Redux/Slices/auth";
+
+import styles from "../../Assets/Styles/Style.module.scss";
+
+
 
 const LoginModal = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const checkFields = () => {
+    let isInputsCorrect = true;
+
+    let inputs = document.querySelector("#login").querySelectorAll("input");
+
+    for (let input of inputs) {
+      if (input.value.trim().length === 0) {
+        input.classList.add(styles.wrong);
+
+        isInputsCorrect = false;
+      } else {
+        input.classList.remove(styles.wrong);
+      }
+    }
+
+    if (isInputsCorrect) {
+      FetchUser();
+    }
+  };
+
+  const FetchUser = async () => {
+    const userData = {
+      login,
+      password,
+    };
+
+    const data = await dispatch(fetchUserData(userData));
+
+    console.log(data);
+
+    if (!data?.error) {
+      navigate("/");
+      window.location.reload();
+    }
+  };
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open Login Modal</Button>
+      <button
+        className={`${styles.blue_button} ${styles.full_scale}`}
+        onClick={handleOpen}
+      >
+        Open Login Modal
+      </button>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            Авторизация
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="login"
-            label="Логин"
-            name="login"
-            autoComplete="login"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Пароль"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Войти
-          </Button>
-        </Box>
+        <div className={`${styles.modal}`}>
+        <section
+      id="login"
+      className={`${styles.input_field}`}
+    >
+      <h1>Авторизация</h1>
+
+      <div className={styles.base_field}>
+        <input
+          type="text"
+          placeholder="Логин"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+        />
+      </div>
+
+      <div className={styles.base_field}>
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      <button
+        className={`${styles.blue_button} ${styles.full_scale}`}
+        onClick={checkFields}
+      >
+        Войти
+      </button>
+    </section>
+        </div>
       </Modal>
     </div>
   );

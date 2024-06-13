@@ -5,6 +5,7 @@ import { logOut } from "../../Redux/Slices/auth";
 
 import styles from "../../Assets/Styles/Style.module.scss";
 import AddBookModal from "../Books/AddBookModalWindow";
+import LoginModal from "../Authorization/ModalLogin";
 
 
 export default function Header({ currentUser, openMenu, changeSignin }) {
@@ -31,7 +32,7 @@ export default function Header({ currentUser, openMenu, changeSignin }) {
 
         {!currentUser ? (
           <section className={styles.navigation_buttons}>
-            <AddBookModal/>
+            <LoginModal/>
             <button
               onClick={() => {
                 navigate("/login");

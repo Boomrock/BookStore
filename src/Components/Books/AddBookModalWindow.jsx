@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle} from '@mui/material';
 import Ganres from './BooksComponent/Ganres';
 
-const genres = [
-  'Fiction',
-  'Non-Fiction',
-  'Science Fiction',
-  'Fantasy',
-  'Mystery',
-  'Thriller',
-  'Biography',
-  'History',
-  'Children',
-];
+
+
 
 export default function AddBookModal() {
   const [open, setOpen] = useState(false);
-  const [genre, setGenre] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,9 +16,7 @@ export default function AddBookModal() {
     setOpen(false);
   };
 
-  const handleGenreChange = (event) => {
-    setGenre(event.target.value);
-  };
+
 
   return (
     <div>
